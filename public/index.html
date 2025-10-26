@@ -6,10 +6,13 @@
     <title>MetaMask Login</title>
     <style>
       body {
-        font-family: sans-serif;
+        font-family: Arial, sans-serif;
         text-align: center;
         padding: 40px;
-        background: #f8f9fa;
+        background: #f4f6f8;
+      }
+      h1 {
+        color: #333;
       }
       button {
         margin: 10px;
@@ -20,13 +23,59 @@
         background-color: #ff9900;
         color: white;
         cursor: pointer;
+        transition: all 0.2s ease;
       }
       button:hover {
         background-color: #e68900;
+        transform: scale(1.05);
       }
       #status {
         margin-top: 20px;
         font-weight: bold;
+        color: #555;
+      }
+
+      /* Toast notification */
+      #toast {
+        visibility: hidden;
+        min-width: 200px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 8px;
+        padding: 12px;
+        position: fixed;
+        z-index: 1000;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+      }
+      #toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
+      }
+
+      /* Spinner */
+      #spinner {
+        display: none;
+        margin: 20px auto;
+        border: 5px solid #ddd;
+        border-top: 5px solid #ff9900;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
@@ -34,8 +83,12 @@
     <h1>🔐 Login with MetaMask</h1>
     <div id="status">Not connected</div>
 
+    <div id="spinner"></div>
+
     <button id="btn-connect">Connect Wallet</button>
     <button id="btn-login">Sign & Login</button>
+
+    <div id="toast"></div>
 
     <script src="/app.js"></script>
   </body>

@@ -68,11 +68,16 @@ app.post('/auth/login', async (req, res) => {
   }
 });
 
-// 3️⃣ Logout: clear session cookie
+// Logout: clear cookie
 app.post('/auth/logout', (req, res) => {
-  res.clearCookie('session');
+  res.clearCookie('session', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+  });
   return res.json({ ok: true });
 });
+
 
 // 4️⃣ Protected route (check JWT)
 app.get('/api/me', (req, res) => {

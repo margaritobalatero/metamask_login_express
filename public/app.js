@@ -1,5 +1,17 @@
 // public/app.js
 
+function showToast(msg, duration = 2500) {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.className = "show";
+  setTimeout(() => (toast.className = toast.className.replace("show", "")), duration);
+}
+
+function showSpinner(show) {
+  const spinner = document.getElementById("spinner");
+  spinner.style.display = show ? "block" : "none";
+}
+
 async function connectWallet() {
   if (!window.ethereum) throw new Error("MetaMask not installed");
   const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -54,9 +66,10 @@ if (typeof window !== "undefined") {
     btnConnect.addEventListener("click", async () => {
       try {
         const address = await connectWallet();
-        status.textContent = `Connected: ${address}`;
+        status.textContent = `✅ Connected: ${address}`;
+        showToast("Wallet connected");
       } catch (err) {
-        status.textContent = "Error: " + err.message;
+        showToast("❌ " + err.message);
       }
     });
   }
@@ -65,10 +78,15 @@ if (typeof window !== "undefined") {
     btnLogin.addEventListener("click", async () => {
       try {
         const address = await connectWallet();
+        showSpinner(true);
+        showToast("Requesting signature...");
         await loginWithSignature(address);
-        window.location.href = "/dashboard";
+        showToast("✅ Logged in successfully!");
+        setTimeout(() => (window.location.href = "/dashboard"), 1500);
       } catch (err) {
-        alert("Login failed: " + err.message);
+        showToast("❌ Login failed: " + err.message);
+      } finally {
+        showSpinner(false);
       }
     });
   }
@@ -77,10 +95,10 @@ if (typeof window !== "undefined") {
   if (btnLogout) {
     btnLogout.addEventListener("click", async () => {
       await fetch("/auth/logout", { method: "POST", credentials: "include" });
-      window.location.href = "/";
+      showToast("Logged out");
+      setTimeout(() => (window.location.href = "/"), 1000);
     });
 
-    // check current user
     (async () => {
       const me = await getMe();
       const userDiv = document.getElementById("user");
