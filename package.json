@@ -1,0 +1,1 @@
+{"name":"metamask-express-auth","version":"1.0.0","private":true,"scripts":{"start":"node server.js","dev":"nodemon server.js"},"dependencies":{"cookie-parser":"^1.4.7","cors":"^2.8.5","dotenv":"^16.6.1","ethers":"^5.8.0","express":"^4.21.2","jsonwebtoken":"^9.0.2"},"devDependencies":{"nodemon":"^2.0.22"}}
