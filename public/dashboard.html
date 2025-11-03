@@ -1,43 +1,125 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <title>📦 Dashboard</title>
     <style>
       body {
-        font-family: sans-serif;
+        font-family: Arial, sans-serif;
+        margin: 40px;
+        background: #f9fafb;
+      }
+
+      h1 {
         text-align: center;
-        padding: 40px;
-        background: #eef2f3;
-      }
-      button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 6px;
-        border: none;
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #0056b3;
-      }
-      #user {
-        margin-top: 20px;
-        font-size: 18px;
         color: #333;
+      }
+
+      form {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        background: #ff9900;
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      button:hover {
+        background: #e68900;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+
+      th {
+        background: #f4f4f4;
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+
+      #toast {
+        visibility: hidden;
+        min-width: 200px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 8px;
+        padding: 12px;
+        position: fixed;
+        z-index: 1000;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.5s, bottom 0.5s;
+      }
+
+      #toast.show {
+        visibility: visible;
+        opacity: 1;
+        bottom: 50px;
       }
     </style>
   </head>
   <body>
-    <h1>🏠 Dashboard (Protected)</h1>
-    <div id="user">Loading user info...</div>
-    <button id="btn-logout">Logout</button>
+     <button id="btn-logout" style="float:right; margin-bottom:20px;">Logout</button>
+    <h1>📦 Dashboard</h1>   
 
-   <div id="toast"></div>
-<script src="/app.js"></script>
+    <form id="itemForm">
+      <input name="item" placeholder="Item" required>
+      <input name="description" placeholder="Description">
+      <input name="quantity" type="number" placeholder="Qty" required>
+      <input name="unit" placeholder="Unit" required>
+      <input name="unitPrice" type="number" step="0.01" placeholder="Price" required>
+      <input name="imageUrl" placeholder="Image URL">
+      <button type="submit">Add</button>
+    </form>
 
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Unit Price</th>
+          <th>User ID (Wallet)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="items"></tbody>
+    </table>
+
+    <div id="toast"></div>
+
+    <script src="/app-dashboard.js"></script>
   </body>
 </html>
