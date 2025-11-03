@@ -12,4 +12,4 @@ Flow:
 - Frontend asks MetaMask to sign the nonce
 - Frontend sends address+signature to server (/auth/login)
 - Server verifies signature, issues JWT cookie
-- Dashboard calls /api/me to confirm
+- Dashboard calls /api/me to confirm"# junjie-metamask-crud" 
